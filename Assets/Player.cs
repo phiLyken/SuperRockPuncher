@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Range(0.001f, 0.5f)]
+    [Range(0.001f, 2.0f)]
     public float StepLength = 0.1f;
-    [Range(0.001f, 0.5f)]
+    [Range(0.001f, 1.5f)]
     public float CooldownInSec = 0.1f;
     [Range(0.5f, 5f)]
     public float PunchRange = 1f;
@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
 
     private void MoveStepUp()
     {
-        _transform.DOKill(_transform);
         _transform.DOMoveY(_transform.position.y + StepLength, StepTransitionTime * StepLength)
             .SetEase(StepEase);
         _timeOfLastAction = Time.time;
@@ -73,6 +72,12 @@ public class Player : MonoBehaviour
 
         if (obstacle != null)
         {
+			ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
+			if(explode != null) {
+				explode.SpawnParticles();
+			}
+		
+
             Destroy(obstacle);
         }
     }
@@ -95,7 +100,6 @@ public class Player : MonoBehaviour
 
         if (Vector3.Dot(dirToLane, dir) > 0)
         {
-            _transform.DOKill(_transform);
             _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y), StepTransitionTime * Mathf.Abs(dirToLane.x) * StepLength)
                 .SetEase(StepEase);
             _isInBooth = false;
@@ -109,7 +113,6 @@ public class Player : MonoBehaviour
         if (booth == null) return;
 
         var dirToBooth = booth.transform.position - _transform.position;
-        _transform.DOKill(_transform);
         _transform.DOMove(booth.transform.position, StepTransitionTime * StepLength * dirToBooth.magnitude)
             .SetEase(StepEase);
         _isInBooth = true;

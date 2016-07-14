@@ -13,7 +13,7 @@ public class RockCameraShake : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		shake = CameraShaker.Instance.StartShake(0, 0, 1);
-		shake.DeleteOnInactive = false;
+
 	
 	}
 
@@ -26,11 +26,10 @@ public class RockCameraShake : MonoBehaviour {
 
 	//	distance = Mathf.Max(0, 5 - distance);
 
+	//	Debug.Log(distance);
 
 		if(distance > 0){
 			shake.Magnitude = (1 / distance ) * DistanceMagnitudeStrength;
-
-
 			shake.Roughness = (1 / distance ) * DistanceRoughnessStrength;
 		}
 	}
@@ -41,17 +40,17 @@ public class RockCameraShake : MonoBehaviour {
 		if(player == null) return 0;
 
 		GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-		
+		Debug.Log(obstacles.Length);
 		return FindClosestDistance( obstacles, player.transform.position);
 
 	}
 
 	float FindClosestDistance(GameObject[] objects, Vector3 position){
 
-		float dist = 300;
+		float dist = float.MaxValue;
 
 		if(objects.Length > 0){
-			for(int i = 1; i < objects.Length; i++){
+			for(int i = 0; i < objects.Length; i++){
 				float current_dist = (objects[i].transform.position - position).magnitude;
 				if(current_dist <  dist){
 					dist = current_dist;

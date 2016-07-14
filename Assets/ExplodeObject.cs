@@ -5,7 +5,7 @@ public class ExplodeObject : MonoBehaviour {
 
 	public GameObject ParticlePrefab;
 
-	void OnDestroy(){
+	public void SpawnParticles(){
 		Instantiate(ParticlePrefab, transform.position, Quaternion.identity);
 	}
 }
