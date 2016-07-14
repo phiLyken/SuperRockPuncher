@@ -693,9 +693,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9b492758c5d274d9322b243e75ea7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StepLength: 0.5
-  CooldownInSec: 0.25
-  PunchRange: 0.98
+  StepLength: 0.3
+  CooldownInSec: 0.2
+  PunchRange: 0.9
+  StepTransitionTime: 0.605
+  StepEase: 1
   Lane: {fileID: 629197921}
 --- !u!1 &1913994653
 GameObject:

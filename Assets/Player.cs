@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class Player : MonoBehaviour
     public float CooldownInSec = 0.1f;
     [Range(0.5f, 5f)]
     public float PunchRange = 1f;
+    [Range(0.001f, 1f)]
+    public float StepTransitionTime = 0.3f;
 
+    public Ease StepEase = Ease.InOutCubic;
     public Transform Lane;
 
     private Transform _transform;
@@ -36,7 +40,9 @@ public class Player : MonoBehaviour
 
     private void MoveStepUp()
     {
-        _transform.Translate(Vector2.up * StepLength);
+        _transform.DOKill(_transform);
+        _transform.DOMoveY(_transform.position.y + StepLength, StepTransitionTime * StepLength)
+            .SetEase(StepEase);
         _timeOfLastAction = Time.time;
     }
 
@@ -89,7 +95,9 @@ public class Player : MonoBehaviour
 
         if (Vector3.Dot(dirToLane, dir) > 0)
         {
-            _transform.position = new Vector2(Lane.position.x, _transform.position.y);
+            _transform.DOKill(_transform);
+            _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y), StepTransitionTime * Mathf.Abs(dirToLane.x) * StepLength)
+                .SetEase(StepEase);
             _isInBooth = false;
             _timeOfLastAction = Time.time;
         }
@@ -100,7 +108,10 @@ public class Player : MonoBehaviour
         var booth = GetObjectInDirectionWithinDistance(dir, BoothLayer);
         if (booth == null) return;
 
-        _transform.position = booth.transform.position;
+        var dirToBooth = booth.transform.position - _transform.position;
+        _transform.DOKill(_transform);
+        _transform.DOMove(booth.transform.position, StepTransitionTime * StepLength * dirToBooth.magnitude)
+            .SetEase(StepEase);
         _isInBooth = true;
         _timeOfLastAction = Time.time;
     }
@@ -112,7 +123,6 @@ public class Player : MonoBehaviour
         if (dist > 0f)
         {
             hit = Physics2D.Raycast(_transform.position, dir, dist, 1 << layer);
-
         }
         else
         {
