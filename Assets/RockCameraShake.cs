@@ -26,7 +26,7 @@ public class RockCameraShake : MonoBehaviour {
 
 	//	distance = Mathf.Max(0, 5 - distance);
 
-		Debug.Log(distance);
+
 		if(distance > 0){
 			shake.Magnitude = (1 / distance ) * DistanceMagnitudeStrength;
 

@@ -49,6 +49,7 @@ public class LaneGenerator : MonoBehaviour {
 			GameObject new_element_right = GameObject.Instantiate( prefab_right, position_right, Quaternion.identity) as GameObject;
 			GameObject new_element_bg = GameObject.Instantiate( BackGroundPrefab, position_background, Quaternion.identity) as GameObject;
 
+			new_element_right.GetComponent<SpriteRenderer>().flipX = true;
 			LeftElements.Add(new_element_left);
 			RightElements.Add(new_element_right);
 			BackGroundElements.Add(new_element_bg);
