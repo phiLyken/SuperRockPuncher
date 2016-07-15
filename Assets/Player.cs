@@ -147,4 +147,10 @@ public class Player : MonoBehaviour
     {
         return _timeOfLastAction > 0f && Time.time - _timeOfLastAction < CooldownInSec;
     }
+
+	void OnDestroy(){
+
+		var recognizer = GetComponent<GestureRecognizer>();
+		recognizer.OnSwipe -= HandleSwipe;
+	}
 }

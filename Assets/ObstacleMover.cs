@@ -5,10 +5,6 @@ public class ObstacleMover : MonoBehaviour {
 
 	float current_speed;
 
-	void Start(){
-		SetSpeed(2f);
-	}
-
 	public void SetSpeed(float new_speed){
 		current_speed = new_speed;
 	}

@@ -40,7 +40,7 @@ public class RockCameraShake : MonoBehaviour {
 		if(player == null) return 0;
 
 		GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-
+ 
 		return FindClosestDistance( obstacles, player.transform.position);
 
 	}

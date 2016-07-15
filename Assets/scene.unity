@@ -85,6 +85,60 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57134260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 57134261}
+  - 61: {fileID: 57134263}
+  - 114: {fileID: 57134262}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57134261
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 57134260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 768495445}
+  m_RootOrder: 4
+--- !u!114 &57134262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 57134260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd31d144289bab54e852467dfa5395af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &57134263
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 57134260}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 11.29, y: 2.94}
 --- !u!1 &116691798
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa82e0b033b880545920d2ce4285827e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 1.5
+  BaseMoveSpeed: 1.5
+  EnhancedScrollSpeed: 7
+  EnhancedScrollDistance: 7.5
 --- !u!4 &768495445
 Transform:
   m_ObjectHideFlags: 0
@@ -236,6 +292,7 @@ Transform:
   - {fileID: 1245693023}
   - {fileID: 1386373663}
   - {fileID: 629197921}
+  - {fileID: 57134261}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!1 &1019519820
@@ -596,6 +653,8 @@ MonoBehaviour:
   random_range: 3
   ObstaclePrefab: {fileID: 160442, guid: 70233cde7c91938469d1850ac4b0bae8, type: 2}
   SpawnAnchor: {fileID: 1248232158}
+  BaseSpeed: 1.8
+  RandomSpeed: 0.5
 --- !u!1 &1800217625
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StepLength: 1
   CooldownInSec: 0.226
-  PunchRange: 0.93
+  PunchRange: 1.05
   StepTransitionTime: 0.231
   StepEase: 1
   Lane: {fileID: 629197921}
