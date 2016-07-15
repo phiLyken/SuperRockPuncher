@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private Transform _transform;
     private float _timeOfLastAction;
 
-    private static readonly int BoothLayer = LayerMask.NameToLayer("Booth");
-    private static readonly int ObstacleLayer = LayerMask.NameToLayer("Obstacle");
+    private int _boothLayer;
+    private int _obstacleLayer;
     private Animator _animator;
     private PunchMeter _punchMeter;
 
@@ -30,6 +30,9 @@ public class Player : MonoBehaviour
 
         var recognizer = GetComponent<GestureRecognizer>();
         recognizer.OnSwipe += HandleSwipe;
+
+        _boothLayer = LayerMask.NameToLayer("Booth");
+        _obstacleLayer = LayerMask.NameToLayer("Obstacle");
     }
 
     public void Update()
@@ -74,7 +77,7 @@ public class Player : MonoBehaviour
     {
         _animator.SetTrigger("Punch");
         var range = _punchMeter.GetRange();
-        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, ObstacleLayer, range);
+        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, range);
 
         if (obstacle != null)
         {
@@ -122,7 +125,7 @@ public class Player : MonoBehaviour
 
     private void TryToMoveIntoBooth(Vector2 dir)
     {
-        var booth = GetObjectInDirectionWithinDistance(dir, BoothLayer);
+        var booth = GetObjectInDirectionWithinDistance(dir, _boothLayer);
         if (booth == null) return;
 
         _animator.SetBool("RunToBooth", true);
