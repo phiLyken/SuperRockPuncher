@@ -18,7 +18,7 @@ public class RockCameraShake : MonoBehaviour {
 	}
 
 	public void PunchShake(){
-		CameraShaker.Instance.ShakeOnce(0.3f,2f, 0,0.5f);
+		
 	}
 	// Update is called once per frame
 	void Update () {
