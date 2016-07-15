@@ -26,6 +26,7 @@ public class GameScene : MonoBehaviour {
 
 	public void TryEnhancedScroll(){
 		if(!_enhancedScroll){
+			PointCounter.Instance.TopReached();
 			StartCoroutine(EnhancedScroll());
 		}
 	}

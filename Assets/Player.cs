@@ -76,7 +76,8 @@ public class Player : MonoBehaviour
 			if(explode != null) {
 				explode.SpawnParticles();
 			}
-		
+
+			PointCounter.Instance.ObstacleDestroyed();
 
             Destroy(obstacle);
         }
