@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PunchMeter : MonoBehaviour {
 
 	public float CurrentFill;
 
 	public float FillRate;
+
+	public float BoothFillRate;
 
 	public float PunchCost;
 
@@ -15,18 +16,25 @@ public class PunchMeter : MonoBehaviour {
 
 	public static PunchMeter Instance;
 
+    public Player Player;
+
 	void Awake(){
 		Instance = this;
 	}
-	void Update(){
-		CurrentFill = Mathf.Clamp01( CurrentFill + Time.deltaTime * FillRate);
+
+	void Update()
+	{
+	    var fillRate = Player.IsInBooth ? BoothFillRate : FillRate;
+
+        CurrentFill = Mathf.Clamp01( CurrentFill + Time.deltaTime * fillRate);
 	}
 
 	public float GetCurrentFill(){
 		return CurrentFill;
 	}
+
 	public void Punch(){
-		CurrentFill-=PunchCost;
+		CurrentFill = Mathf.Clamp01(CurrentFill - PunchCost);
 	}
 
 	public float GetRange(){

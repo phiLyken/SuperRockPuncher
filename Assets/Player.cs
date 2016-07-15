@@ -7,26 +7,26 @@ public class Player : MonoBehaviour
     public float StepLength = 0.1f;
     [Range(0.001f, 1.5f)]
     public float CooldownInSec = 0.1f;
-    [Range(0.5f, 5f)]
-    public float PunchRange = 1f;
     [Range(0.001f, 1f)]
     public float StepTransitionTime = 0.3f;
 
     public Ease StepEase = Ease.InOutCubic;
     public Transform Lane;
+    public bool IsInBooth { get; private set; }
 
     private Transform _transform;
     private float _timeOfLastAction;
 
     private static readonly int BoothLayer = LayerMask.NameToLayer("Booth");
     private static readonly int ObstacleLayer = LayerMask.NameToLayer("Obstacle");
-    private bool _isInBooth;
     private Animator _animator;
+    private PunchMeter _punchMeter;
 
     public void Awake()
     {
         _transform = GetComponent<Transform>();
         _animator = GetComponent<Animator>();
+        _punchMeter = GetComponent<PunchMeter>();
 
         var recognizer = GetComponent<GestureRecognizer>();
         recognizer.OnSwipe += HandleSwipe;
@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
     private void TryToAttack()
     {
         _animator.SetTrigger("Punch");
-        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, ObstacleLayer, PunchRange);
+        var range = _punchMeter.GetRange();
+        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, ObstacleLayer, range);
 
         if (obstacle != null)
         {
@@ -86,11 +87,13 @@ public class Player : MonoBehaviour
 
             Destroy(obstacle);
         }
+
+        _punchMeter.Punch();
     }
 
     private void TryToMoveInOrOutOfBooth(Vector2 dir)
     {
-        if (_isInBooth)
+        if (IsInBooth)
         {
             TryToMoveOutOfBooth(dir);
         }
@@ -108,7 +111,7 @@ public class Player : MonoBehaviour
         {
             _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y), StepTransitionTime * Mathf.Abs(dirToLane.x) * StepLength)
                 .SetEase(StepEase);
-            _isInBooth = false;
+            IsInBooth = false;
             _timeOfLastAction = Time.time;
         }
     }
@@ -121,7 +124,7 @@ public class Player : MonoBehaviour
         var dirToBooth = booth.transform.position - _transform.position;
         _transform.DOMove(booth.transform.position, StepTransitionTime * StepLength * dirToBooth.magnitude)
             .SetEase(StepEase);
-        _isInBooth = true;
+        IsInBooth = true;
         _timeOfLastAction = Time.time;
     }
 
@@ -143,7 +146,7 @@ public class Player : MonoBehaviour
 
     private void TryMoveStepUp()
     {
-        if (!IsCoolingDown() && !_isInBooth)
+        if (!IsCoolingDown() && !IsInBooth)
         {
             MoveStepUp();
         }
