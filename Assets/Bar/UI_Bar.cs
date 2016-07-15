@@ -12,7 +12,7 @@ public class UI_Bar : MonoBehaviour {
     {
         if(BarDimension == Vector2.zero)
         {
-            BarDimension = GetComponent<RectTransform>().sizeDelta;
+			BarDimension = Bar.GetComponent<RectTransform>().sizeDelta;
         }
         t = Mathf.Clamp(t, 0, 1);
 
