@@ -21,10 +21,12 @@ public class Player : MonoBehaviour
     private static readonly int BoothLayer = LayerMask.NameToLayer("Booth");
     private static readonly int ObstacleLayer = LayerMask.NameToLayer("Obstacle");
     private bool _isInBooth;
+    private Animator _animator;
 
     public void Awake()
     {
         _transform = GetComponent<Transform>();
+        _animator = GetComponent<Animator>();
 
         var recognizer = GetComponent<GestureRecognizer>();
         recognizer.OnSwipe += HandleSwipe;
@@ -40,6 +42,8 @@ public class Player : MonoBehaviour
 
     private void MoveStepUp()
     {
+        _animator.SetTrigger("Step");
+
         _transform.DOMoveY(_transform.position.y + StepLength, StepTransitionTime * StepLength)
             .SetEase(StepEase);
         _timeOfLastAction = Time.time;
@@ -68,6 +72,7 @@ public class Player : MonoBehaviour
 
     private void TryToAttack()
     {
+        _animator.SetTrigger("Punch");
         var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, ObstacleLayer, PunchRange);
 
         if (obstacle != null)
