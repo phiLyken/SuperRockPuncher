@@ -109,8 +109,12 @@ public class Player : MonoBehaviour
 
         if (Vector3.Dot(dirToLane, dir) > 0)
         {
-            _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y), StepTransitionTime * Mathf.Abs(dirToLane.x) * StepLength)
-                .SetEase(StepEase);
+            _animator.SetBool("RunToBooth", true);
+
+            _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y),
+                StepTransitionTime*Mathf.Abs(dirToLane.x)*StepLength)
+                .SetEase(StepEase)
+                .OnComplete(() => _animator.SetBool("RunToBooth", false));
             IsInBooth = false;
             _timeOfLastAction = Time.time;
         }
@@ -121,9 +125,12 @@ public class Player : MonoBehaviour
         var booth = GetObjectInDirectionWithinDistance(dir, BoothLayer);
         if (booth == null) return;
 
+        _animator.SetBool("RunToBooth", true);
         var dirToBooth = booth.transform.position - _transform.position;
         _transform.DOMove(booth.transform.position, StepTransitionTime * StepLength * dirToBooth.magnitude)
-            .SetEase(StepEase);
+            .SetEase(StepEase)
+            .OnComplete(() => _animator.SetBool("RunToBooth", false));
+
         IsInBooth = true;
         _timeOfLastAction = Time.time;
     }
