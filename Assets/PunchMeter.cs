@@ -13,11 +13,17 @@ public class PunchMeter : MonoBehaviour {
 
 	public float Range;
 
+	public static PunchMeter Instance;
 
+	void Awake(){
+		Instance = this;
+	}
 	void Update(){
 		CurrentFill = Mathf.Clamp01( CurrentFill + Time.deltaTime * FillRate);
+	}
 
-
+	public float GetCurrentFill(){
+		return CurrentFill;
 	}
 	public void Punch(){
 		CurrentFill-=PunchCost;

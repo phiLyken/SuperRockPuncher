@@ -7,6 +7,7 @@ public class TopBorder : MonoBehaviour {
 
 		if(col.tag == "Player"){
 			GameScene.Instance.TryEnhancedScroll();
+
 		}
 	}
 }
