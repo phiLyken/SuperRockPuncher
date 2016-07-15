@@ -1131,6 +1131,7 @@ GameObject:
   - 50: {fileID: 1800217628}
   - 114: {fileID: 1800217632}
   - 114: {fileID: 1800217633}
+  - 95: {fileID: 1800217634}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1281,6 +1282,23 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   Range: 5
+--- !u!95 &1800217634
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1800217625}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 283c6994a4dc52a43ab7c1c9efbcaa3c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1913994653
 GameObject:
   m_ObjectHideFlags: 0
