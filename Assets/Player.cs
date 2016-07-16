@@ -73,13 +73,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool CanAttack(out GameObject obstacle)
+    {
+      
+        var range = _punchMeter.GetRange();
+        obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, range);
+
+        return obstacle != null;
+    }
     private void TryToAttack()
     {
         _animator.SetTrigger("Punch");
-        var range = _punchMeter.GetRange();
-        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, range);
 
-        if (obstacle != null)
+        GameObject obstacle;
+        if (CanAttack(out obstacle))
         {
 			ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
 			if(explode != null) {

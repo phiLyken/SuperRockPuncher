@@ -15,8 +15,8 @@ public class LaneGenerator : MonoBehaviour {
 	public GameObject BoothPrefab;
 	public GameObject BackGroundPrefab;
 
-	float baseChanceBooth = 0.05f;
-	float additionalChanceForBooth = 0.05f;
+	
+	float additionalChanceForBooth = 0.075f;
 
 	List<GameObject> LeftElements = new List<GameObject>();
 	List<GameObject> RightElements = new List<GameObject>();
@@ -86,7 +86,7 @@ public class LaneGenerator : MonoBehaviour {
 
 	float GetChance(List<GameObject> elements){
 		
-		float start_chance = -0.2f;
+		float start_chance = -0.15f;
 
 		List<GameObject> elements_reversed = new List<GameObject>( elements);
 		elements_reversed.Reverse();
