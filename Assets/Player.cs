@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     private int _obstacleLayer;
     private Animator _animator;
     private PunchMeter _punchMeter;
+    private bool _isPunching;
 
     public void Awake()
     {
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour
         switch (dir)
         {
             case GestureRecognizer.SwipeDirection.Up:
-                TryToAttack();
+                TriggerAttack();
                 break;
             case GestureRecognizer.SwipeDirection.Left:
                 TryToMoveInOrOutOfBooth(Vector2.left);
@@ -73,25 +75,50 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void TryToAttack()
+    private void TriggerAttack()
     {
-        _animator.SetTrigger("Punch");
-        var range = _punchMeter.GetRange();
-        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, range);
+        if (IsCoolingDown())
+            return;
+
+        StartCoroutine(ExecuteAttack());
+    }
+
+    private IEnumerator ExecuteAttack()
+    {
+        var punchDuration = _punchMeter.GetRange();
+        _punchMeter.Punch();
+        _animator.SetBool("Punching", true);
+        _isPunching = true;
+        _timeOfLastAction = Time.time;
+
+        while (punchDuration > 0f)
+        {
+            Attack();
+            punchDuration -= Time.deltaTime;
+            yield return null;
+        }
+
+
+        _isPunching = false;
+        _animator.SetBool("Punching", false);
+    }
+
+    private void Attack()
+    {
+        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, 1f);
 
         if (obstacle != null)
         {
-			ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
-			if(explode != null) {
-				explode.SpawnParticles();
-			}
+            ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
+            if (explode != null)
+            {
+                explode.SpawnParticles();
+            }
 
-			PointCounter.Instance.ObstacleDestroyed();
+            PointCounter.Instance.ObstacleDestroyed();
 
             Destroy(obstacle);
         }
-
-        _punchMeter.Punch();
     }
 
     private void TryToMoveInOrOutOfBooth(Vector2 dir)
@@ -156,7 +183,7 @@ public class Player : MonoBehaviour
 
     private void TryMoveStepUp()
     {
-        if (!IsCoolingDown() && !IsInBooth)
+        if (!IsCoolingDown() && !IsInBooth && !_isPunching)
         {
             MoveStepUp();
         }
