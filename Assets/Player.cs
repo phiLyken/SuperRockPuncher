@@ -99,10 +99,9 @@ public class Player : MonoBehaviour
         while (punchDuration > 0f)
         {
             Attack();
-            punchDuration -= Time.deltaTime;
-            yield return null;
+            punchDuration -= Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
-
 
         _isPunching = false;
         _animator.SetBool("Punching", false);
