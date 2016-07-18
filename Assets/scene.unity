@@ -362,7 +362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &575208125
 RectTransform:
   m_ObjectHideFlags: 0
@@ -769,7 +769,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -800,7 +799,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1064257472}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb4413d7e64286140aacbfc5a39e2771, type: 3}
   m_Name: 
@@ -1349,20 +1348,30 @@ MonoBehaviour:
   FillToRange:
     serializedVersion: 2
     m_Curve:
-    - time: -0.0040625
-      value: 0.5024838
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+    - time: 0.0020135702
+      value: 0.07389165
+      inSlope: 0.1565984
+      outSlope: 0.0027837066
+      tangentMode: 1
+    - time: 0.17282279
+      value: 0.091472484
+      inSlope: 0.18847355
+      outSlope: 0.18847355
+      tangentMode: 9
+    - time: 0.25089693
+      value: 0.11286639
+      inSlope: 0.394301
+      outSlope: 0.394301
+      tangentMode: 10
+    - time: 0.99613154
+      value: 0.49635047
+      inSlope: 0.5145817
+      outSlope: 0.5145817
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  Range: 2
+  Range: 1
   Player: {fileID: 1800217631}
 --- !u!95 &1800217634
 Animator:

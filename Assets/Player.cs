@@ -86,10 +86,15 @@ public class Player : MonoBehaviour
     private IEnumerator ExecuteAttack()
     {
         var punchDuration = _punchMeter.GetRange();
+
+        //Do a step before punching
+        _transform.DOMoveY(_transform.position.y + StepLength / StepTransitionTime * punchDuration, punchDuration)
+            .SetEase(StepEase);
+
         _punchMeter.Punch();
         _animator.SetBool("Punching", true);
-        _isPunching = true;
         _timeOfLastAction = Time.time;
+        _isPunching = true;
 
         while (punchDuration > 0f)
         {
