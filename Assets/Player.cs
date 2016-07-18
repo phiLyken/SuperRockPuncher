@@ -103,11 +103,18 @@ public class Player : MonoBehaviour
         _animator.SetBool("Punching", false);
     }
 
+    public bool CanAttack(out GameObject obstacle)
+    {
+        obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, 1f);
+
+        return obstacle != null;
+    }
+
     private void Attack()
     {
-        var obstacle = GetObjectInDirectionWithinDistance(Vector2.up, _obstacleLayer, 1f);
+        GameObject obstacle;
 
-        if (obstacle != null)
+        if (CanAttack(out obstacle))
         {
             ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
             if (explode != null)

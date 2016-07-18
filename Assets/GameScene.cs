@@ -8,20 +8,26 @@ public class GameScene : MonoBehaviour {
 	public float EnhancedScrollSpeed;
 	public float EnhancedScrollDistance;
 
-	float _currentMoveSpeed;
+    public float MaxSpeed;
+    public float SpeedIncrease;
+
+	float GetCurrentMoveSpeed()
+    {
+        return _enhancedScroll ? EnhancedScrollSpeed : BaseMoveSpeed;
+    }
 	bool _enhancedScroll;
 
 	// Update is called once per frame
-	void Update () {
-	
-		transform.Translate(Vector3.up * _currentMoveSpeed * Time.fixedDeltaTime);
+	void FixedUpdate () {
+        BaseMoveSpeed = Mathf.Min((BaseMoveSpeed + SpeedIncrease * Time.fixedDeltaTime), MaxSpeed);
+		transform.Translate(Vector3.up * GetCurrentMoveSpeed() * Time.fixedDeltaTime);
 
 	}
 	void Start(){
 		StartScroll();
 	}
 	void StartScroll(){
-		_currentMoveSpeed = BaseMoveSpeed;
+		
 	}
 
 	public void TryEnhancedScroll(){
@@ -38,12 +44,12 @@ public class GameScene : MonoBehaviour {
 	protected IEnumerator EnhancedScroll(){
 		_enhancedScroll = true;
 		Vector3 startScroll = transform.position;
-		_currentMoveSpeed = EnhancedScrollSpeed;
+
 		while( ( startScroll - transform.position).magnitude < EnhancedScrollDistance){
 //			Debug.Log(( startScroll - transform.position).magnitude );
 			yield return null;
 		}
-		_currentMoveSpeed = BaseMoveSpeed;
+		
 		_enhancedScroll = false;
 	}
 }

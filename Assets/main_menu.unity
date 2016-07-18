@@ -424,6 +424,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -958,8 +959,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1230423701}
   - 20: {fileID: 1230423707}
-  - 92: {fileID: 1230423706}
-  - 124: {fileID: 1230423705}
   - 81: {fileID: 1230423704}
   - 114: {fileID: 1230423703}
   - 114: {fileID: 1230423702}
@@ -1011,20 +1010,6 @@ MonoBehaviour:
   DefaultRotInfluence: {x: 1, y: 1, z: 1}
 --- !u!81 &1230423704
 AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1230423700}
-  m_Enabled: 1
---- !u!124 &1230423705
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1230423700}
-  m_Enabled: 1
---- !u!92 &1230423706
-Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}

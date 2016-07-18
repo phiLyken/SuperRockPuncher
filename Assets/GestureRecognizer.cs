@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GestureRecognizer : MonoBehaviour
 {
+    public float SwipeDistance = 1.5f;
+
     public enum SwipeDirection
     {
         Up,
@@ -14,7 +16,7 @@ public class GestureRecognizer : MonoBehaviour
 
     public void Awake()
     {
-        var recognizer = new TKSwipeRecognizer();
+        var recognizer = new TKSwipeRecognizer(SwipeDistance);
         recognizer.gestureRecognizedEvent += r =>
         {
             Debug.Log(r.completedSwipeDirection);
