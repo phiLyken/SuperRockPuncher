@@ -2,6 +2,8 @@
 using DG.Tweening;
 using UnityEngine;
 
+
+
 public class Player : MonoBehaviour
 {
     [Range(0.001f, 2.0f)]
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
 
     private Transform _transform;
     private float _timeOfLastAction;
+
 
     private int _boothLayer;
     private int _obstacleLayer;
@@ -209,5 +212,8 @@ public class Player : MonoBehaviour
 
 		var recognizer = GetComponent<GestureRecognizer>();
 		recognizer.OnSwipe -= HandleSwipe;
+
+		UI_GameOver.Instance.ShowScreen();
+		GameScene.Instance.GameEnded = true;
 	}
 }

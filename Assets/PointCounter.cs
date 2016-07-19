@@ -32,6 +32,9 @@ public class PointCounter : MonoBehaviour {
 	// Update is called once per frame
 	
 	void Update(){
+		if(GameScene.Instance.GameEnded) {
+			return;
+		}
 		acc_points += Time.deltaTime * PointsPerSecond;
 		int new_time_points = (int) Mathf.Round(acc_points);
 		if(new_time_points != points_time){

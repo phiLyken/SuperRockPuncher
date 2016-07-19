@@ -8,6 +8,8 @@ public class GameScene : MonoBehaviour {
 	public float EnhancedScrollSpeed;
 	public float EnhancedScrollDistance;
 
+	public bool GameEnded;
+
     public float MaxSpeed;
     public float SpeedIncrease;
 
@@ -24,11 +26,10 @@ public class GameScene : MonoBehaviour {
 
 	}
 	void Start(){
-		StartScroll();
+		GameEnded = false;
+
 	}
-	void StartScroll(){
-		
-	}
+
 
 	public void TryEnhancedScroll(){
 		if(!_enhancedScroll){

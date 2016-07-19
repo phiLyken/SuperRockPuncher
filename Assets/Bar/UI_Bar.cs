@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UI_Bar : MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class UI_Bar : MonoBehaviour {
     public void SetColor(Color c)
     {
         Bar.GetComponent<Image>().color = c;
+		
     }
     
 }
