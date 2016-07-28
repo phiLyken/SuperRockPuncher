@@ -1,35 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
-public class GameScene : MonoBehaviour {
-
+public class GameScene : MonoBehaviour
+{
 	public static GameScene Instance;
 	public float BaseMoveSpeed;
 	public float EnhancedScrollSpeed;
 	public float EnhancedScrollDistance;
+	public float MaxSpeed;
+	public float SpeedIncrease;
 
-	public bool GameEnded;
-
-    public float MaxSpeed;
-    public float SpeedIncrease;
-
-	float GetCurrentMoveSpeed()
-    {
-        return _enhancedScroll ? EnhancedScrollSpeed : BaseMoveSpeed;
-    }
 	bool _enhancedScroll;
+	private bool _gameEnded;
+	public Action OnGameEnded;
+	public bool GameEnded
+	{
+		get { return _gameEnded; }
+		set
+		{
+			if (value && OnGameEnded != null)
+			{
+				OnGameEnded();
+			}
+			_gameEnded = value;
+		}
+	}
 
-	// Update is called once per frame
 	void FixedUpdate () {
         BaseMoveSpeed = Mathf.Min((BaseMoveSpeed + SpeedIncrease * Time.fixedDeltaTime), MaxSpeed);
 		transform.Translate(Vector3.up * GetCurrentMoveSpeed() * Time.fixedDeltaTime);
 
 	}
+
 	void Start(){
 		GameEnded = false;
-
 	}
 
+	float GetCurrentMoveSpeed()
+	{
+		return _enhancedScroll ? EnhancedScrollSpeed : BaseMoveSpeed;
+	}
 
 	public void TryEnhancedScroll(){
 		if(!_enhancedScroll){

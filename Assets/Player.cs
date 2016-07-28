@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
 		var recognizer = GetComponent<GestureRecognizer>();
 		recognizer.OnSwipe -= HandleSwipe;
 
-		UI_GameOver.Instance.ShowScreen();
 		GameScene.Instance.GameEnded = true;
+		UI_GameOver.Instance.ShowScreen();
 	}
 }
