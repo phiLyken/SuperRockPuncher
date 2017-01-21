@@ -26,7 +26,7 @@ public class UI_GameOver : MonoBehaviour {
 		StartCoroutine(ShowSequence());
 	}
 	IEnumerator ShowSequence(){
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(.5f);
 		Content.DOMoveY( transform.position.y, 0.3f);
 		yield return new WaitForSeconds(0.3f);
 

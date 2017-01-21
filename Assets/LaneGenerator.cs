@@ -2,8 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class LaneGenerator : MonoBehaviour {
+
+    public Action<GameObject> OnLeftSpawn;
+    public Action<GameObject> OnRightSpawn;
 
 	public float ElementHeight;
 
@@ -18,8 +22,8 @@ public class LaneGenerator : MonoBehaviour {
 	
 	float additionalChanceForBooth = 0.075f;
 
-	List<GameObject> LeftElements = new List<GameObject>();
-	List<GameObject> RightElements = new List<GameObject>();
+	public List<GameObject> LeftElements = new List<GameObject>();
+    public List<GameObject> RightElements = new List<GameObject>();
 	List<GameObject> BackGroundElements = new List<GameObject>();
 
 	public	float MinDistance;
@@ -38,8 +42,8 @@ public class LaneGenerator : MonoBehaviour {
 	void GenerateChunk(){
 		
 		while(MinDistance > GetCurrentLaneLength()){
-			GameObject prefab_left = Random.value < GetChance(LeftElements) ? BoothPrefab : WallPrefab;
-			GameObject prefab_right = Random.value < GetChance(RightElements) ? BoothPrefab : WallPrefab;
+			GameObject prefab_left = UnityEngine.Random.value < GetChance(LeftElements) ? BoothPrefab : WallPrefab;
+			GameObject prefab_right = UnityEngine.Random.value < GetChance(RightElements) ? BoothPrefab : WallPrefab;
 
 			Vector3 position_left = LeftElements[LeftElements.Count-1].transform.position + Vector3.up * ElementHeight;
 			Vector3 position_right = RightElements[RightElements.Count-1].transform.position + Vector3.up *  ElementHeight;
@@ -50,6 +54,10 @@ public class LaneGenerator : MonoBehaviour {
 			GameObject new_element_bg = GameObject.Instantiate( BackGroundPrefab, position_background, Quaternion.identity) as GameObject;
 
 			new_element_right.GetComponent<SpriteRenderer>().flipX = true;
+
+            OnLeftSpawn.AttemptCall(new_element_left);
+            OnRightSpawn.AttemptCall(new_element_right);
+
 			LeftElements.Add(new_element_left);
 			RightElements.Add(new_element_right);
 			BackGroundElements.Add(new_element_bg);
@@ -85,14 +93,18 @@ public class LaneGenerator : MonoBehaviour {
 	}
 
 	float GetChance(List<GameObject> elements){
-		
+        
 		float start_chance = -0.15f;
 
 		List<GameObject> elements_reversed = new List<GameObject>( elements);
 		elements_reversed.Reverse();
-
+        int count = 0;
 		foreach(GameObject go in elements_reversed){
-			
+            count++;
+
+            if (!MissionSystem.HasCompletedGlobal("move_out") && count == 2)
+                return 0.75f;
+
 			start_chance += additionalChanceForBooth;
 
 			if(go.tag == "Booth"){

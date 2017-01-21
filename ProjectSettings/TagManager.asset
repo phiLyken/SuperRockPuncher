@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Booth
   - Obstacle
+  - TutorialUI
   layers:
   - Default
   - TransparentFX

@@ -3,9 +3,15 @@ using DG.Tweening;
 using UnityEngine;
 
 
+using System;
 
 public class Player : MonoBehaviour
 {
+    public enum PlayerActions
+    {
+        move_in, move_out, move_forward, punch
+    }
+
     [Range(0.001f, 2.0f)]
     public float StepLength = 0.1f;
     [Range(0.001f, 1.5f)]
@@ -27,6 +33,8 @@ public class Player : MonoBehaviour
     private PunchMeter _punchMeter;
     private bool _isPunching;
 
+   
+    public static Action<PlayerActions> OnAction;
     public void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -50,6 +58,7 @@ public class Player : MonoBehaviour
 
     private void MoveStepUp()
     {
+        OnAction.AttemptCall(PlayerActions.move_forward);
         _animator.SetTrigger("Step");
 
         _transform.DOMoveY(_transform.position.y + StepLength, StepTransitionTime * StepLength)
@@ -89,7 +98,7 @@ public class Player : MonoBehaviour
     private IEnumerator ExecuteAttack()
     {
         var punchDuration = _punchMeter.GetRange();
-
+        OnAction.AttemptCall(PlayerActions.punch);
         //Do a step before punching
         _transform.DOMoveY(_transform.position.y + StepLength / StepTransitionTime * punchDuration, punchDuration)
             .SetEase(StepEase);
@@ -120,15 +129,17 @@ public class Player : MonoBehaviour
     private void Attack()
     {
         GameObject obstacle;
-
+       // Debug.Log("Attempting Attack!");
         if (CanAttack(out obstacle))
         {
+        //    Debug.Log("Attack!");
+            obstacle.GetComponent<Collider2D>().enabled = false;
             ExplodeObject explode = obstacle.GetComponent<ExplodeObject>();
             if (explode != null)
             {
                 explode.SpawnParticles();
             }
-
+           
             PointCounter.Instance.ObstacleDestroyed();
 
             Destroy(obstacle);
@@ -153,6 +164,9 @@ public class Player : MonoBehaviour
 
         if (Vector3.Dot(dirToLane, dir) > 0)
         {
+
+            OnAction.AttemptCall(PlayerActions.move_out);
+          
             _animator.SetBool("RunToBooth", true);
 
             _transform.DOMove(new Vector2(Lane.position.x, _transform.position.y),
@@ -168,7 +182,7 @@ public class Player : MonoBehaviour
     {
         var booth = GetObjectInDirectionWithinDistance(dir, _boothLayer);
         if (booth == null) return;
-
+        OnAction.AttemptCall(PlayerActions.move_in);
         _animator.SetBool("RunToBooth", true);
         var dirToBooth = booth.transform.position - _transform.position;
         _transform.DOMove(booth.transform.position, StepTransitionTime * StepLength * dirToBooth.magnitude)
@@ -215,5 +229,8 @@ public class Player : MonoBehaviour
 
 		GameScene.Instance.GameEnded = true;
 		UI_GameOver.Instance.ShowScreen();
+        OnAction = null;
+        GetComponent<ExplodeObject>().SpawnParticles();
 	}
+ 
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ObstacleSpawner : MonoBehaviour {
 
+   
 	public float min_time;
 	public float random_range;
 
@@ -14,13 +15,20 @@ public class ObstacleSpawner : MonoBehaviour {
 
 	float next_spawn_time = 3;
 
+    public bool SpawnEnabled;
+
+    void OnEnable()
+    {
+
+        SpawnEnabled = (MissionSystem.HasCompletedGlobal("punch"));
+    }
 	void Update(){
-		if(Time.time > next_spawn_time){
+		if(SpawnEnabled && Time.time > next_spawn_time){
 			SpawnObstacle();
 		}
 	}
 
-	void SpawnObstacle(){
+	public void SpawnObstacle(){
 
 		next_spawn_time = Time.time + min_time + Random.Range(0, random_range);
 		GameObject new_obstacle = (Instantiate(ObstaclePrefab, SpawnAnchor.position, Quaternion.identity) as GameObject);

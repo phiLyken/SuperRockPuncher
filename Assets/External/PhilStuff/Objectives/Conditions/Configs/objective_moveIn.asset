@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d88d30541eee843a5729fcaba66e3e, type: 3}
+  m_Name: objective_moveIn
+  m_EditorClassIdentifier: 
+  Title: IN
+  Description: 
+  ID: move_in
+  UI_Info: {fileID: 0}
+  Condition: {fileID: 11446272, guid: edf37e6afa88fa74f9399bd17109d46c, type: 2}
+  Setup:
+  - {fileID: 11423154, guid: d39fcd3d656dab44cbdbe8e31b3caed5, type: 2}
+  - {fileID: 11485320, guid: ffdab11fff4823c4b95d1164258137d9, type: 2}

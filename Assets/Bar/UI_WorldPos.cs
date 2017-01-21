@@ -4,19 +4,27 @@ using System.Collections;
 public class UI_WorldPos : MonoBehaviour {
     public Vector2 WorldPositionOffset;
     public Transform worldPosAnchor;
-
+    public bool ContinousUpdate;
     public void SetWorldPosition(Vector3 pos)
     {
         RectTransform m_rect = GetComponent<RectTransform>();
         m_rect.localPosition = WorldToCanvasPosition(transform.parent.GetComponent<RectTransform>(), Camera.main, pos, WorldPositionOffset);
     }
 
-    public void SetWorldPosObject(Transform tr)
+    public void SetWorldPosObject(Transform tr, bool update)
     {
+        ContinousUpdate = update;
         worldPosAnchor = tr;
         UpdatePos();
     }
 
+    void Update()
+    {
+        if (ContinousUpdate && worldPosAnchor != null)
+        {
+            UpdatePos();
+        }
+    }
     public void UpdatePos()
     {
         SetWorldPosition(worldPosAnchor.position);

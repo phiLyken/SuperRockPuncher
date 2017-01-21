@@ -24,8 +24,6 @@ public class FlashInRange : MonoBehaviour
             GameObject obstacle;
             if (player.CanAttack(out obstacle))
             {
-                Debug.Log("can attack");
-
                 if (obstacle == gameObject)
                 {
                     flashed = true;
